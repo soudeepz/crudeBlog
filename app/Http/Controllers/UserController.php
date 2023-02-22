@@ -5,16 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function storeAvatar(Request $request){
+        $request->validate([
+            'avatar' => 'required|image|max:2048'
+        ]);
+
+        $user = auth()->user();
+
+        $filename = $user->id . '-' . uniqid() . '.jpg';//uniqid() gives a random generated text
+
+        $imgData = Image::make($request->file('avatar'))->fit(120)->encode('jpg');//fit(120) means image which is 120px X 120px square
+        Storage::put('public/avatars/' . $filename, $imgData);
+
+        $oldAvatar = $user->avatar;
+
+        $user->avatar = $filename;
+        $user->save();
+
+        if ($oldAvatar != "/fallback-avatar.jpg"){//if the filename is anything other than fallback pic then delete it
+            Storage::delete(str_replace("/storage/", "public/", $oldAvatar));
+            //we cannot use /storage/avatars/file because it is meant for web browser. we need path that is meant relative to our storage folder public/avatars/file
+        }
+
+        return back()->with('success', 'Congrats on the new avatar');
+    } 
+    
     public function showAvatarForm(){
         return view('avatar-form');
     }
     
     public function profile(User $user){
 
-        return view('profile-posts', ['username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+        return view('profile-posts', ['avatar' => $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
     }
     
     public function logout(){

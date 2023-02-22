@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,12 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    protected function avatar(): Attribute{
+        return Attribute::make(get: function($value){//$value is returning incoming value form the database.
+            return $value ? '/storage/avatars/' . $value : '/fallback-avatar.jpg';//we change the value to be returned when this avatar column data is called with the user model
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
