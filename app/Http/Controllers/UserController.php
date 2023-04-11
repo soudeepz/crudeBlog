@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
@@ -33,17 +34,22 @@ class UserController extends Controller
         }
 
         return back()->with('success', 'Congrats on the new avatar');
-    } 
-    
+    }
+
     public function showAvatarForm(){
         return view('avatar-form');
     }
-    
-    public function profile(User $user){
 
-        return view('profile-posts', ['avatar' => $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+    public function profile(User $user){
+        $currentlyFollowing = 0;
+
+        if(auth()->check()){
+            $currentlyFollowing = Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+        }
+
+        return view('profile-posts', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
     }
-    
+
     public function logout(){
         auth()->logout();
         return redirect('/')->with('success','You have been Logged Out!');
@@ -79,7 +85,7 @@ class UserController extends Controller
             'password' => ['required', 'min:8', 'confirmed']
         ]);
 
-        $incomingFields['password'] = bcrypt($incomingFields['password']); 
+        $incomingFields['password'] = bcrypt($incomingFields['password']);
 
         $user = User::create($incomingFields);
         auth()->login($user);
