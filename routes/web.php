@@ -17,7 +17,6 @@ use Illuminate\Routing\Controllers\Middleware;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/admins-only', function(){
     return "Only Admins can view this page";
 })->middleware('can:visitAdminPages');
