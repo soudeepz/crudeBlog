@@ -1,5 +1,7 @@
 <x-layout>
     <div class="container container--narrow py-md-5">
+        <a class="" href="/profile/{{ auth()->user()->username }}">&lt;&lt; Back</a>
+        <br><hr>
         <h2 class="text-center mb-3">Upload a New Avatar</h2>
         <form action="/manage-avatar" method="POST" enctype="multipart/form-data">
         @csrf

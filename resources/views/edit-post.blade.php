@@ -11,7 +11,7 @@
                 <p class="m-0 small alert alert-danger shadow-sm">{{$message}}</p>
             @enderror
           </div>
-  
+
           <div class="form-group">
             <label for="post-body" class="text-muted mb-1"><small>Body Content</small></label>
             <textarea name="body" id="post-body" class="body-content tall-textarea form-control" type="text">{{old('body', $post->body)}}</textarea>
@@ -19,7 +19,7 @@
             <p class="m-0 small alert alert-danger shadow-sm">{{$message}}</p>
             @enderror
           </div>
-  
+
           <button class="btn btn-primary">Save Changes</button>
         </form>
       </div>

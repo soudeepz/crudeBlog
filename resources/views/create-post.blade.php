@@ -1,5 +1,7 @@
 <x-layout>
     <div class="container py-md-5 container--narrow">
+        <a class="" href="/profile/{{ auth()->user()->username }}">&lt;&lt; Back</a>
+        <br><hr>
         <form action="/create-post" method="POST">
             @csrf
           <div class="form-group">
@@ -9,7 +11,7 @@
                 <p class="m-0 small alert alert-danger shadow-sm">{{$message}}</p>
             @enderror
           </div>
-  
+
           <div class="form-group">
             <label for="post-body" class="text-muted mb-1"><small>Body Content</small></label>
             <textarea name="body" id="post-body" class="body-content tall-textarea form-control" type="text">{{old('body')}}</textarea>
@@ -17,7 +19,7 @@
             <p class="m-0 small alert alert-danger shadow-sm">{{$message}}</p>
             @enderror
           </div>
-  
+
           <button class="btn btn-primary">Save New Post</button>
         </form>
       </div>
