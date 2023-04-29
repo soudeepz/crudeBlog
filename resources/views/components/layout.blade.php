@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>crudeBlog</title>
+    <title>
+        @isset($doctitle)
+        {{ $doctitle }} | crudeBlog
+        @else
+        crudeBlog
+        @endisset
+    </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
     <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,7 +23,7 @@
     <header class="header-bar mb-3">
       <div class="container d-flex flex-column flex-md-row align-items-center p-3">
         <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">crudeBlog</a></h4>
-        
+
         @auth
         <div class="flex-row my-3 my-md-0">
           <a href="#" class="text-white mr-2 header-search-icon" title="Search" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-search"></i></a>
@@ -45,7 +51,7 @@
           </div>
         </form>
         @endauth
-        
+
       </div>
     </header>
     <!-- header ends here -->
@@ -57,7 +63,7 @@
         {{session('success')}}
       </div>
     </div>
-      
+
     @endif
 
     @if (session()->has('failure'))
@@ -67,7 +73,7 @@
         {{session('failure')}}
       </div>
     </div>
-      
+
     @endif
 
     {{$slot}}
