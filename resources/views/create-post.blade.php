@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout doctitle="Create New Post">
     <div class="container py-md-5 container--narrow">
         <a class="" href="/profile/{{ auth()->user()->username }}">&lt;&lt; Back</a>
         <br><hr>

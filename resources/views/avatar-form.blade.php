@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout doctitle="Manage Your Avatar">
     <div class="container container--narrow py-md-5">
         <a class="" href="/profile/{{ auth()->user()->username }}">&lt;&lt; Back</a>
         <br><hr>

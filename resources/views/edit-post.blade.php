@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout doctitle="Editing: {{ $post->title }}">
     <div class="container py-md-5 container--narrow">
         <form action="/post/{{$post->id}}" method="POST"> <!-- PUT method is usually used to update data -->
             <p><small><strong><a href="/post/{{$post->id}}">&laquo; Back to Post permalink</a></strong></small></p>
