@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function() {
             Mail::to('test@mail.com')->send(new RecapEmail());
-        })->everyMinute();
+        })->everyThreeHours();
         // $schedule->command('inspire')->hourly();
     }
 
